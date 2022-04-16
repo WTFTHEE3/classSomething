@@ -1,16 +1,23 @@
 package com.italkutalk.lab9_2
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.view.View
 import android.widget.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
+
 import kotlin.math.pow
 
 class MainActivity : AppCompatActivity() {
+    private var progress1 = 0
     //建立變數以利後續綁定元件
     private lateinit var btn_calculate: Button
     private lateinit var ed_height: EditText
@@ -38,6 +45,9 @@ class MainActivity : AppCompatActivity() {
         progressBar2 = findViewById(R.id.progressBar2)
         ll_progress = findViewById(R.id.ll_progress)
         btn_boy = findViewById(R.id.btn_boy)
+        //初始化進度條
+        progressBar2.progress =0
+        tv_progress.text = "0%"
         //對計算按鈕設定監聽器
         btn_calculate.setOnClickListener {
             when {
@@ -48,20 +58,51 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
     //建立 showToast 方法顯示 Toast 訊息
     private fun showToast(msg: String) =
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+
+    private var handler = Handler(Looper.getMainLooper()){ msg ->
+        if (msg.what == 1) {
+            progressBar2.progress = progress1
+            tv_progress.text = "$progress1%"
+        }
+        if (progress1 == 100) {
+            ll_progress.visibility = View.GONE
+
+        }
+        true
+    }
+
     //用 Coroutines 模擬檢測過程
+    @SuppressLint("SetTextI18n")
     private fun runCoroutines() {
+
         tv_weight.text = "標準體重\n 無"
         tv_fat.text = "體脂肪\n 無"
         tv_bmi.text = "BMI\n 無"
-        //初始化進度條
+        /*/初始化進度條
         progressBar2.progress = 0
         tv_progress.text = "0%"
+        */
+
         //顯示進度條
-        ll_progress.visibility = View.VISIBLE
-        GlobalScope.launch(Dispatchers.Main) {
+        //ll_progress.visibility = View.VISIBLE
+        Thread {
+            ll_progress.visibility = View.VISIBLE
+                while (progress1 < 100) {
+                    Thread.sleep(50)
+                    //progressBar2.progress = progress1
+                    //tv_progress.text = "$progress1%"
+                    progress1++
+                    val msg = Message()
+                    msg.what =1
+                    handler.sendMessage(msg)
+                }
+
+            }.start()
+        /*GlobalScope.launch(Dispatchers.Main) {
             var progress = 0
             //建立迴圈執行一百次共延長五秒
             while (progress < 100) {
@@ -72,8 +113,8 @@ class MainActivity : AppCompatActivity() {
                 tv_progress.text = "$progress%"
                 //計數加一
                 progress++
-            }
-            ll_progress.visibility = View.GONE
+            }*/
+            /*ll_progress.visibility = View.GONE*/
             val height = ed_height.text.toString().toDouble() //身高
             val weight = ed_weight.text.toString().toDouble() //體重
             val age = ed_age.text.toString().toDouble() //年齡
@@ -87,6 +128,7 @@ class MainActivity : AppCompatActivity() {
             tv_weight.text = "標準體重 \n${String.format("%.2f", stand_weight)}"
             tv_fat.text = "體脂肪 \n${String.format("%.2f", body_fat)}"
             tv_bmi.text = "BMI \n${String.format("%.2f", bmi)}"
+
         }
     }
-}
+//}
