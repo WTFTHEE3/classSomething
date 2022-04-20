@@ -27,7 +27,7 @@
         tools:text="@tools:sample/date/ddmmyy" />
 
     <Button
-        android:id="@+id/but_Logout"
+        android:id="@+id/btn_logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_textTime"
