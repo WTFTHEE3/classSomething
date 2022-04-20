@@ -2,6 +2,7 @@ package com.example.loginapp
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.DatePicker
@@ -26,15 +27,21 @@ class SecActivity:AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimeP
     var savedMinute = 0
     lateinit var btn_timePicker : Button
     lateinit var tv_textTime : TextView
+    lateinit var btn_logout : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sec)
         btn_timePicker = findViewById(R.id.btn_timePicker)
         tv_textTime = findViewById(R.id.tv_textTime)
+        btn_logout= findViewById(R.id.btn_logout)
 
         pickDate()
-
+        btn_logout.setOnClickListener {
+            //val intent = Intent(this,MainActivity::class.java)
+            finish()
+            //startActivity(intent)
+        }
     }
 
     private fun getDateTimeCalendar(){
