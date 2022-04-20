@@ -29,6 +29,8 @@ class MainActivity : AppCompatActivity() {
             } else if (username.text.toString().equals(correct_username)) {
                 if (password.text.toString().equals(correct_password)) {
                     val intent = Intent(this,SecActivity::class.java)
+                    username.setText("")
+                    password.setText("")
                     startActivity(intent)
                 }
             } else {
