@@ -1,6 +1,7 @@
 package com.example.loginapp
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
@@ -27,7 +28,8 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Invalid Inputs", Toast.LENGTH_SHORT).show()
             } else if (username.text.toString().equals(correct_username)) {
                 if (password.text.toString().equals(correct_password)) {
-                    Toast.makeText(this, "Success Login", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this,SecActivity::class.java)
+                    startActivity(intent)
                 }
             } else {
                 Toast.makeText(this, "Invalid UserName/PassWord", Toast.LENGTH_SHORT).show()
