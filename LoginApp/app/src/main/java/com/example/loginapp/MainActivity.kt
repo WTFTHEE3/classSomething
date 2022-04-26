@@ -13,8 +13,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var username: EditText
     lateinit var password: EditText
     lateinit var btnLogin: Button
-    val correct_username = "test"
-    val correct_password = "password"
+    val correct_username = "aaa"
+    val correct_password = "123"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
