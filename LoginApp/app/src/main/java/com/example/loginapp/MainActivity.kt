@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         btnLogin.setOnClickListener {
             if (TextUtils.isEmpty(username.text.toString()) || TextUtils.isEmpty(password.text.toString())) {
                 Toast.makeText(this, "Invalid Inputs", Toast.LENGTH_SHORT).show()
-            } else if (username.text.toString().equals(correct_username)) {
+            } else if (username.text.toString() == correct_username && password.text.toString() == correct_password){
                 if (password.text.toString().equals(correct_password)) {
                     val intent = Intent(this,SecActivity::class.java)
                     username.setText("")
